@@ -201,7 +201,7 @@ endif
 map <silent> <leader>r :redraw!<CR>
 
 " Turn mouse mode on
-nnoremap <leader>ma :set mouse=a<cr>
+nnoremap <leader>ma :set mouse=r<cr>
 
 " Turn mouse mode off
 nnoremap <leader>mo :set mouse=<cr>

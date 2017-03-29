@@ -57,8 +57,8 @@ setup_haskell() {
 
   msg "Installing helper binaries..."
   local STACK_LIST="ghc-mod hlint hasktags hscope pointfree pointful hoogle apply-refact machines-directory-0.2.0.9 machines-io-0.2.0.13 codex-0.5.0.2"
-  stack --resolver ${STACK_RESOLVER} install ${STACK_LIST} --verbosity warning ; RETCODE=$?
-  [ ${RETCODE} -ne 0 ] && exit_err "Binary installation failed with error ${RETCODE}."
+  #  stack --resolver ${STACK_RESOLVER} install ${STACK_LIST} --verbosity warning ; RETCODE=$?
+  # [ ${RETCODE} -ne 0 ] && exit_err "Binary installation failed with error ${RETCODE}."
 
   # Install hindent 5 via pinned nightly
   stack --resolver nightly-2016-12-28 install hindent --verbosity warning ; RETCODE=$?
