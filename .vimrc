@@ -99,6 +99,7 @@ Plug 'int3/vim-extradite'
 " Bars, panels, and files
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 
@@ -115,17 +116,21 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Haskell
-Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+" modified version to support cprocessing 
+Plug 'nghamilton/haskell-vim', { 'for': 'haskell' }
 Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
-Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+"had to disable because ghc-mod sucks with cabal new-*
+"Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+"Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
 
 " Colorscheme
 Plug 'vim-scripts/wombat256.vim'
+Plug '~/.config/nvim/bundle/hij/'
 
-" Custom bundles
+" Customizations
+Plug 'LnL7/vim-nix'
 
 if filereadable(hvn_user_plugins)
   execute 'source '. hvn_user_plugins
@@ -138,7 +143,7 @@ call plug#end()
 " VIM user interface {{{
 
 " Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+"set so=7
 
 " Turn on the WiLd menu
 set wildmenu
@@ -201,7 +206,7 @@ endif
 map <silent> <leader>r :redraw!<CR>
 
 " Turn mouse mode on
-nnoremap <leader>ma :set mouse=r<cr>
+nnoremap <leader>ma :set mouse=a<cr>
 
 " Turn mouse mode off
 nnoremap <leader>mo :set mouse=<cr>
@@ -218,36 +223,6 @@ endif
 
 " Colors and Fonts {{{
 
-try
-  colorscheme wombat256mod
-catch
-endtry
-
-" Adjust signscolumn to match wombat
-hi! link SignColumn LineNr
-
-" Use pleasant but very visible search hilighting
-hi Search ctermfg=white ctermbg=173 cterm=none guifg=#ffffff guibg=#e5786d gui=none
-hi! link Visual Search
-
-" Match wombat colors in nerd tree
-hi Directory guifg=#8ac6f2
-
-" Searing red very visible cursor
-hi Cursor guibg=red
-
-" Don't blink normal mode cursor
-set guicursor=n-v-c:block-Cursor
-set guicursor+=n-v-c:blinkon0
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-  set guioptions-=T
-  set guioptions-=e
-  set guitablabel=%M\ %t
-endif
-set t_Co=256
-
 " Set utf8 as standard encoding and en_US as the standard language
 if !has('nvim')
   " Only set this for vim, since neovim is utf8 as default and setting it
@@ -260,15 +235,6 @@ set ffs=unix,dos,mac
 
 " Use large font by default in MacVim
 set gfn=Monaco:h19
-
-" Use powerline fonts for airline
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline_powerline_fonts = 1
-let g:airline_symbols.space = "\ua0"
-" }}}
 
 " Files, backups and undo {{{
 

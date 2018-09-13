@@ -62,9 +62,9 @@ set csto=1 " search codex tags first
 nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
 " Automatically make cscope connections
 function! LoadHscope()
-  let db = findfile("hscope.out", ".;")
+  let db = findfile(".hscope", ".;")
   if (!empty(db))
-    let path = strpart(db, 0, match(db, "/hscope.out$"))
+    let path = strpart(db, 0, match(db, "/.hscope$"))
     set nocscopeverbose " suppress 'duplicate connection' error
     exe "cs add " . db . " " . path
     set cscopeverbose
@@ -136,10 +136,6 @@ let g:necoghc_enable_detailed_browse = 1
 " Resolve ghcmod base directory
 au FileType haskell let g:ghcmod_use_basedir = getcwd()
 
-" Type of expression under cursor
-nmap <silent> <leader>ht :GhcModType<CR>
-" Insert type of expression under cursor
-nmap <silent> <leader>hT :GhcModTypeInsert<CR>
 " GHC errors and warnings
 nmap <silent> <leader>hc :Neomake ghcmod<CR>
 
