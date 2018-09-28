@@ -129,9 +129,6 @@ Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
 Plug 'vim-scripts/wombat256.vim'
 Plug '~/.config/nvim/bundle/hij/'
 
-" Customizations
-Plug 'LnL7/vim-nix'
-
 if filereadable(hvn_user_plugins)
   execute 'source '. hvn_user_plugins
 endif
