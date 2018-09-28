@@ -1,0 +1,1 @@
+/home/nhamilton/.vim.plugins
