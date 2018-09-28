@@ -1,0 +1,296 @@
+"Vim allows for per-project configuration files, although this is turned off by default
+set exrc
+" disable unsafe commands in your project-specific  - should be at end of file?
+set secure
+
+" Set 0 lines above/below the cursor - when moving vertically using j/k
+set so=0
+
+" redraw the screen on focus, so we can shrink/expand it easily
+:au FocusGained * :redraw!
+
+" stop cursor from wrapping past end of line with bw etc
+set whichwrap=
+" custom key bindings
+" Generate haskell tags with codex and hscope
+"map <leader>tu :!codex update<CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:     call LoadHscope()<CR> 
+" and hasktags without codex... much faster!
+map <leader>tu call Hasktags()<CR><CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR> 
+function Hasktags()
+  :silent !hasktags --extendedctag --cache --ignore-close-implementation --ctags --tags-absolute -o .codex.tags .
+  :redraw!
+endfunction
+" set iskeyword=a-z,A-Z,_,.,39 -- doesn't work, supposed to allow qualified searches
+
+
+" Add these to your vimrc to automatically keep the tags file up to date.
+" Unfortunately silent means the errors look a little ugly, I suppose I could
+" capture those and print them out with echohl WarningMsg.
+augroup tags
+au BufWritePost *.hs            call Hasktags()
+au BufWritePost *.hsc           call Hasktags()
+augroup END
+
+" Show error bar, and jump to next/prev with f keys
+nmap <silent> <leader>hc :w<CR> :Neomake ghcmod<CR>
+nmap <silent> <F1> :lopen<CR><C-K>
+nmap <silent> <F2> :lnext<CR>
+nmap <silent> <F3> :lprev<CR>
+
+"expand current window to max
+map <C-Space> <C-W>_ :set cmdheight=1<CR> :only<CR> :tabonly<CR> :redraw<CR>
+"close other windows (or use  Ctrl+w,o )
+"map <C-Space> <C-W>_ :only<CR> :tabonly<CR>
+" and expand the cmd window to be bigger
+map <F3> :set cmdheight=10<CR>
+
+" Save all open buffers and quit
+nmap ZZ :wqa <CR>
+
+
+"nmap <silent> <leader>tu :!ctags -R --languages=-all,+Elm<CR><CR>
+
+" easy tag for tag updates automatically - needs configuration for haskell using LoadHscope()/codex
+"let g:easytags_languages = {
+"\   'elm': {
+"\     'cmd': g:easytags_cmd,
+"\	    'args': [],
+"\	    'fileoutput_opt': '-f',
+"\	    'stdout_opt': '-f-',
+"\	    'recurse_flag': '-R'
+"\   }
+"\}
+
+
+
+"use real tabs for py files
+autocmd FileType python setlocal noexpandtab tabstop=4
+
+let hscopedb = "./.hscope"
+set tags+=.codex.tags;/
+
+"scrolling with mouse
+nmap <F11> zh5
+nmap <F12> zl5
+"navigating forward/back
+map <F9> <C-O>
+imap <Right> <C-O>
+map <F10> <C-I>
+imap <Left> <C-I>
+"nav into
+nmap <CR> <C-]>
+"nmap <CR> <C-]> G 1 <CR> <CR> 
+
+" ELM
+let g:elm_format_autosave = 1
+let g:elm_syntastic_show_warnings = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+
+" mouse a ignores line numbers when copying
+set mouse=a
+
+"set wrap!
+set nonumber
+
+" When editing a file, always jump to the last cursor position
+autocmd BufReadPost *
+
+" Search and replace word under cursor using rr
+map <silent> ** :%s/<c-r><c-w>/<c-r><c-w>/g<c-f>$F/i
+
+" Global search and replace
+command! -nargs=+ GReplace 
+\   execute 'silent !rrH <args>' 
+\ | execute 'update'
+\ | execute 'redraw!'
+" need to save first so the buffer doesn't get messed with
+map <C-S-H> :wa <CR> :GReplace <c-r><c-w> 
+
+set history=1000
+set cmdheight=1
+
+if has('persistent_undo')      "check if your vim version supports it
+  set undofile                 "turn on the feature  
+  set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
+endif
+
+" This font is needed in the terminal
+"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
+
+" start nerdtree if no files opened
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Let Vim walk up directory hierarchy from CWD to root looking for tags file
+" set tags=.hscope;/
+" Tell EasyTags to use the tags file found by Vim
+" let g:easytags_dynamic_files = 1
+"
+"select all with ctrl-a
+map <C-a> <esc>ggVG<CR>
+
+" """"""""""""""""""""""""""""""""""""""""""
+" COPY PASTE STUFF
+" """"""""""""""""""""""""""""""""""""""""""
+
+" paste in at the end of the file, after a space
+"nmap <silent> <leader>p $a <esc>p
+
+"To ALWAYS use the system clipboard for ALL operations in neovim
+set clipboard+=unnamedplus
+" always save what was pasted
+nnoremap p pgvy
+vnoremap p pgvy
+
+"dont copy of register
+nnoremap d "_d
+vnoremap d "_d
+nnoremap D "_D
+vnoremap D "_D
+
+" global search using ack/ag/etc (using CtrlSF plugin)
+"vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-S-F> <Plug>CtrlSFPrompt
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Haskell specific stuff
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+
+"""""""""""""""""""""""
+" COLORS
+"
+" set default colors for everything
+"true color support
+set t_Co=256
+set termguicolors
+
+filetype plugin on
+colorscheme wombat256mod
+autocmd BufEnter *.hs colorscheme hij
+
+let g:airline_theme='sol'
+
+" Adjust signscolumn to match wombat
+hi! link SignColumn LineNr
+
+" Use pleasant but very visible search hilighting
+hi Search ctermfg=white ctermbg=173 cterm=none guifg=#ffffff guibg=#e5786d gui=none
+hi! link Visual Search
+
+" Match wombat colors in nerd tree
+hi Directory guifg=#8ac6f2
+
+" Searing red very visible cursor
+hi Cursor guibg=red
+
+" Don't blink normal mode cursor
+set guicursor=n-v-c:block-Cursor
+set guicursor+=n-v-c:blinkon0
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+  set guioptions-=T
+  set guioptions-=e
+  set guitablabel=%M\ %t
+endif
+
+" Use powerline fonts for airline
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_powerline_fonts = 1
+let g:airline_symbols.space = "\ua0"
+" }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""
+let g:nix_maintainer="nghamilton"
+
+" Intero-neovim -- override with local .nvim files
+let g:intero_backend = {
+        \ 'command': 'cabal repl',
+        \ 'options': '--ghc-options="-Wall"'
+        \}
+       " \ 'cwd': expand('%:p:h'),
+" Enable type information on hover (when holding cursor at point for x second).
+let g:intero_type_on_hover = 0 " Seems to clear errors...annoying
+" OPTIONAL: Make the update time shorter, so the type info will trigger faster.
+set updatetime=1000
+
+" Type of expression under cursor
+nmap <silent> <leader>ht :InteroGenericType<CR>
+" Insert type of expression under cursor
+nmap <silent> <leader>hT :InteroTypeInsert<CR>
+
+" Use Intero for typechecking, not ALE -- currently ALE is more asynchronous
+let g:intero_use_neomake = 0
+"let g:ale_lint_on_enter = 0 "disabled ALE
+"let g:ale_lint_on_save = 0
+
+" Use ALE (works even when not using Intero)
+"let g:intero_use_neomake = 1
+
+"ALE
+let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+highlight clear ALEErrorSign
+highlight ALEErrorSign ctermbg=black ctermfg=red guibg=white guifg=red gui=bold
+highlight clear ALEErrorLine 
+highlight ALEErrorLine ctermbg=DarkRed guibg=white guifg=#FF0000
+highlight clear ALEWarningSign 
+highlight ALEWarningSign ctermbg=black ctermfg=yellow guibg=white guifg=black
+highlight clear ALEWarningLine 
+highlight clear ALEWarning
+
+"make haskellConcealPlus keep symbols upon cursor movement
+set concealcursor=ncv
+
+"change multicursor to default to selecting all
+"let g:multi_cursor_select_all_word_key = '<C-n>'
+
+
+"Open Intero and jump to it, after saving all
+map <leader>io :wa<CR> :InteroOpen<CR> <C-J> i
+
+"fix formatting
+map <leader>gq :ALEFix<CR>
+
+" jump to imports/pragma
+map <leader>hp /^{-#.*\n\n<CR>:noh<CR>:redraw!<CR>j
+map <leader>hP /^{-#.*\n\n<CR>:noh<CR>:redraw!<CR>o{-#
+map <leader>hi /^import.*\n\n<CR>:noh<CR>j
+map <leader>hI /^import.*\n\n<CR>:noh<CR>oimport
+
+"ALE offers some commands with <Plug> keybinds for moving between warnings and errors quickly. You can map the keys Ctrl+j and Ctrl+k to moving between errors for example:
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
+"NB: this configuration only works with cabal and not cabl new-* builds ... as for britanny, no idea.
+let g:ale_linters = {'haskell': []}
+" with ghc and stack, and without our custom cabal_ghc:
+"\   'haskell': ['brittany', 'ghc', 'stack-ghc', 'stack-build'!!, 'ghc-mod', 'stack-ghc-mod', 'hlint', 'hdevtools', 'hfmt'],
+
+"let g:ale_command_wrapper = '/tmp/debug-ale'
+
+"disabled these two in .vimrc because ghc-mod being stupid with cabal new-*
+"Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+"Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+Plug 'nghamilton/hij', { 'for': 'haskell' }
+
+" neco-ghc
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
+let g:necoghc_enable_detailed_browse = 1
+let g:necoghc_debug = 1
+
+" show errors
+
