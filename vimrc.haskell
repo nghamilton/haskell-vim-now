@@ -94,7 +94,8 @@ nnoremap <silent> <leader>hz :HoogleClose<CR>
 
 " Formatting {{{
 " Use hindent instead of par for haskell buffers
-autocmd FileType haskell let &formatprg="hindent --tab-size 2 -XQuasiQuotes"
+"autocmd FileType haskell let &formatprg="hindent --tab-size 2 -XQuasiQuotes"
+autocmd FileType haskell let &formatprg="stylish-haskell"
 
 " Enable some tabular presets for Haskell
 let g:haskell_tabular = 1

@@ -124,6 +124,7 @@ Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
 "Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
+Plug 'nbouscal/vim-stylish-haskell', { 'for': 'haskell' }
 
 " Colorscheme
 Plug 'vim-scripts/wombat256.vim'
@@ -260,6 +261,7 @@ nmap <silent> <leader>u :MundoToggle<CR>
 nnoremap <silent> <Leader><space> :CtrlP<CR>
 let g:ctrlp_max_files=0
 let g:ctrlp_show_hidden=1
+set wildignore+=*.o,*.hi,*.tags
 let g:ctrlp_custom_ignore = { 'dir': '\v[\/](.git|.cabal-sandbox|.stack-work)$' }
 
 " }}}
