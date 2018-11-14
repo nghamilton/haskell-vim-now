@@ -118,7 +118,8 @@ Plug 'christoomey/vim-tmux-navigator'
 " Haskell
 " modified version to support cprocessing 
 Plug 'nghamilton/haskell-vim', { 'for': 'haskell' }
-Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
+"disabled because it is too distracting when switching between modes
+"Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
 "had to disable because ghc-mod sucks with cabal new-*
 "Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 "Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
