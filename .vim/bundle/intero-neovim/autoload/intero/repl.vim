@@ -102,8 +102,8 @@ function! intero#repl#type_at(generic, l1, c1, l2, c2) abort
             let l:col1 = intero#util#getcol(a:l1, a:c1)
             let l:col2 = intero#util#getcol(a:l2, a:c2)
         else
-            " Relative path to current file, quoted.
-            let l:module = '"./' . @% . '"'
+            " Full path to current file, quoted.
+            let l:module = '"' . expand('%:p') . '"'
 
             " Weird difference where regular GHCi needs the end column to be
             " beyond the last character of the selection, as opposed to how
