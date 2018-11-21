@@ -153,6 +153,9 @@ vnoremap D "_D
 "vmap     <C-F>F <Plug>CtrlSFVwordExec
 nmap     <C-S-F> <Plug>CtrlSFPrompt
 
+" ctr-s to save
+map <C-S> :w<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Haskell specific stuff
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""
