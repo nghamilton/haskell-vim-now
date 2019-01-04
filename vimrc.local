@@ -166,6 +166,11 @@ map <C-S> :w<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:neoformat_run_all_formatters = 1
 let g:neoformat_enabled_haskell = ['stylishhaskell']
+" auto format after a save
+augroup fmt
+      autocmd!
+      autocmd BufWritePre * undojoin | Neoformat
+augroup END
 
 """""""""""""""""""""""
 " COLORS
@@ -236,7 +241,7 @@ nmap <silent> <leader>hT :InteroTypeInsert<CR>
 " Use Intero for typechecking, not ALE -- currently ALE is more asynchronous
 let g:intero_use_neomake = 0
 "let g:ale_lint_on_enter = 0 "disabled ALE
-let g:ale_lint_on_save = 0
+let g:ale_lint_on_save = 1
 
 " Use ALE (works even when not using Intero)
 "let g:intero_use_neomake = 1
@@ -256,6 +261,10 @@ highlight clear ALEWarningSign
 highlight ALEWarningSign ctermbg=black ctermfg=yellow guibg=white guifg=black
 highlight clear ALEWarningLine 
 highlight clear ALEWarning
+"jump to next/prev error
+nmap <silent> <leader>f :ALEFirst<cr>
+nmap <silent> <leader>n :ALENext<cr>
+nmap <silent> <leader>p :ALEPrevious<cr>
 
 "show 'tabs' for the open buffers in the tabline
 let g:airline#extensions#tabline#enabled = 1
@@ -302,7 +311,8 @@ let g:ale_linters = {'haskell': []}
 "Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 
 " neco-ghc
-let g:haskellmode_completion_ghc = 0
+" let g:haskellmode_completion_ghc = 0
+" let g:necoghc_enable_detailed_browse = 1
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
 let g:necoghc_enable_detailed_browse = 1
