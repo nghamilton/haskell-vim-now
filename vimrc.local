@@ -47,6 +47,9 @@ map <F3> :set cmdheight=10<CR>
 " Save all open buffers and quit
 nmap ZZ :wqa <CR>
 
+" attempt to quit
+nmap <C-Q> :q<CR>
+
 
 "nmap <silent> <leader>tu :!ctags -R --languages=-all,+Elm<CR><CR>
 
@@ -82,7 +85,7 @@ nmap <CR> <C-]>
 "nmap <CR> <C-]> G 1 <CR> <CR> 
 
 " ELM
-let g:elm_format_autosave = 1
+let g:elm_format_autosave = 0
 let g:elm_syntastic_show_warnings = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -90,7 +93,7 @@ let g:syntastic_auto_loc_list = 1
 " mouse a ignores line numbers when copying
 set mouse=a
 
-"set wrap!
+set wrap!
 set nonumber
 
 " When editing a file, always jump to the last cursor position
@@ -161,6 +164,8 @@ map <C-S> :w<CR>
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:neoformat_run_all_formatters = 1
+let g:neoformat_enabled_haskell = ['stylishhaskell']
 
 """""""""""""""""""""""
 " COLORS
@@ -231,7 +236,7 @@ nmap <silent> <leader>hT :InteroTypeInsert<CR>
 " Use Intero for typechecking, not ALE -- currently ALE is more asynchronous
 let g:intero_use_neomake = 0
 "let g:ale_lint_on_enter = 0 "disabled ALE
-"let g:ale_lint_on_save = 0
+let g:ale_lint_on_save = 0
 
 " Use ALE (works even when not using Intero)
 "let g:intero_use_neomake = 1
@@ -252,12 +257,20 @@ highlight ALEWarningSign ctermbg=black ctermfg=yellow guibg=white guifg=black
 highlight clear ALEWarningLine 
 highlight clear ALEWarning
 
+"show 'tabs' for the open buffers in the tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
 "make haskellConcealPlus keep symbols upon cursor movement
 set concealcursor=ncv
 
 "change multicursor to default to selecting all
 "let g:multi_cursor_select_all_word_key = '<C-n>'
 
+"Close the current buffer
+map <C-w> :bd<CR>
 
 "Open Intero and jump to it, after saving all
 map <leader>io :wa<CR> :InteroOpen<CR> <C-J> i
@@ -300,3 +313,5 @@ autocmd FileType haskell let g:ctrlp_custom_ignore = { 'dir': '\v[\/](.git|.caba
 
 " show errors
 
+" Map Ctrl-Backspace to delete the previous word in insert mode.
+noremap! <C-BS> <C-w>

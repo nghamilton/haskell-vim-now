@@ -20,3 +20,5 @@ Plug 'nghamilton/hij', { 'for': 'haskell' }
 
 " non-haskell specific
 Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
+Plug 'jreybert/vimagit'
