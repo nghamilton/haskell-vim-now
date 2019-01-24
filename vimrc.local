@@ -211,6 +211,9 @@ map <C-S> :w<CR>
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+" case sensitive tag jumping
+autocmd BufEnter  *.h  setlocal noignorecase
+
 let g:neoformat_run_all_formatters = 1
 let g:neoformat_enabled_haskell = ['stylishhaskell']
 " auto format after a save
