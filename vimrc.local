@@ -112,10 +112,10 @@ set tags+=.codex.tags;/
 " Duplicates will appear if there is more than one tag file. This can happen if working from multiple directories.
 " ln from each directory in a project that is worked from withing (i.e multi module projects)
 " `codex` isn't compiling at the moment, so it can't be used. Install it when it does work, as it tags all packages in the project.
-"
+" NB: also doesn't seem to generate all tags for a multi module project, so run `tu` from the shell.
 " Generate haskell tags with codex and hscope
 "map <leader>tu :!codex update<CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:     call LoadHscope()<CR> 
-" or run hasktags without codex... much faster!
+" or run hasktags without codex... much faster! 
 " NB: LoadHscope() maps hscope generated database file to cscope tags
 map <leader>tu call Hasktags()<CR><CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR> 
 function Hasktags()
@@ -212,7 +212,7 @@ map <C-S> :w<CR>
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " case sensitive tag jumping
-autocmd BufEnter  *.h  setlocal noignorecase
+autocmd BufEnter  *.hs setlocal noignorecase
 
 let g:neoformat_run_all_formatters = 1
 let g:neoformat_enabled_haskell = ['stylishhaskell']
