@@ -278,6 +278,8 @@ let g:intero_backend = {
         \ 'options': '--ghc-options="-Wall"'
         \}
        " \ 'cwd': expand('%:p:h'),
+" Start for haskell on startup 
+let g:intero_start_immediately = 1
 " Enable type information on hover (when holding cursor at point for x second).
 let g:intero_type_on_hover = 0 " Seems to clear errors...annoying
 " OPTIONAL: Make the update time shorter, so the type info will trigger faster.
