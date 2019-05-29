@@ -211,6 +211,9 @@ map <C-S> :w<CR>
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set nerdtree to ignore build outputs and tag files
+autocmd BufEnter *.hs let g:NERDTreeIgnore = ['\.o$','\.hi$','\.dyn_hi$','\.dyn_o$','\.tags$']
+
 " case sensitive tag jumping
 autocmd BufEnter  *.hs setlocal noignorecase
 
@@ -218,8 +221,8 @@ let g:neoformat_run_all_formatters = 1
 let g:neoformat_enabled_haskell = ['stylishhaskell']
 " auto format after a save
 augroup fmt
-      autocmd!
-      autocmd BufWritePre * undojoin | Neoformat
+  autocmd!
+  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
 augroup END
 
 """""""""""""""""""""""
