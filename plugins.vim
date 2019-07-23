@@ -16,9 +16,11 @@ Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 Plug 'neomake/neomake'
 Plug 'LnL7/vim-nix'
+Plug 'Twinside/vim-haskellFold'
 Plug 'nghamilton/hij', { 'for': 'haskell' }
 
 " non-haskell specific
 " Plug 'jceb/vim-orgmode'
 " Plug 'tpope/vim-speeddating'
 Plug 'jreybert/vimagit'
+Plug 'tpope/vim-surround'

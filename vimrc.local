@@ -119,7 +119,7 @@ set tags+=.codex.tags;/
 " NB: LoadHscope() maps hscope generated database file to cscope tags
 map <leader>tu call Hasktags()<CR><CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR> 
 function Hasktags()
-  :silent !hasktags --extendedctag -R --ignore-close-implementation --ctags --tags-absolute -o .codex.tags .
+  :silent !hasktags --extendedctag -R --ctags --tags-absolute -o .codex.tags .
   :redraw!
 endfunction
 " set iskeyword=a-z,A-Z,_,.,39 -- doesn't work, supposed to allow qualified searches
