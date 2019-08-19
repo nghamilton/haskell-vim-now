@@ -24,3 +24,5 @@ Plug 'nghamilton/hij', { 'for': 'haskell' }
 " Plug 'tpope/vim-speeddating'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-surround'
+Plug 'ElmCast/elm-vim'
+Plug 'ElmCast/elm-oracle'
