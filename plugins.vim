@@ -26,3 +26,7 @@ Plug 'jreybert/vimagit'
 Plug 'tpope/vim-surround'
 Plug 'ElmCast/elm-vim'
 Plug 'ElmCast/elm-oracle'
+
+" Plant UML diagram syntax in vim
+Plug 'aklt/plantuml-syntax'
+
