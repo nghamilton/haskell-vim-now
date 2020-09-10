@@ -221,13 +221,14 @@ autocmd BufEnter *.hs let g:NERDTreeIgnore = ['\.o$','\.hi$','\.dyn_hi$','\.dyn_
 " case sensitive tag jumping
 autocmd BufEnter  *.hs setlocal noignorecase
 
-let g:neoformat_run_all_formatters = 1
-let g:neoformat_enabled_haskell = ['brittany']
+" manually add these into local .vimrc files if want autoformatting
+" let g:neoformat_run_all_formatters = 1
+" let g:neoformat_enabled_haskell = ['brittany']
 " auto format after a save
-augroup fmt
-  autocmd!
-  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
-augroup END
+" augroup fmt
+"   autocmd!
+"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+" augroup END
 
 """""""""""""""""""""""
 " COLORS
@@ -286,7 +287,7 @@ let g:intero_backend = {
         \}
        " \ 'cwd': expand('%:p:h'),
 " Start for haskell on startup 
-let g:intero_start_immediately = 1
+let g:intero_start_immediately = 0
 " Enable type information on hover (when holding cursor at point for x second).
 let g:intero_type_on_hover = 0 " Seems to clear errors...annoying
 " OPTIONAL: Make the update time shorter, so the type info will trigger faster.
@@ -398,3 +399,6 @@ let g:ctrlp_use_caching = 1
 
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 noremap! <C-BS> <C-w>
+
+" LOAD LOCAL DIRECTORY VIMRC FILES!
+set exrc
