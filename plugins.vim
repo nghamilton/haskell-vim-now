@@ -22,3 +22,5 @@ Plug 'nghamilton/hij', { 'for': 'haskell' }
 " Plug 'jceb/vim-orgmode'
 " Plug 'tpope/vim-speeddating'
 Plug 'jreybert/vimagit'
+Plug 'tpope/vim-abolish'
+Plug 'avh4/elm-format'

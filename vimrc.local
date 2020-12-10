@@ -37,6 +37,7 @@ nmap <C-Q> :q<CR>
 "use real tabs for py files
 autocmd FileType python setlocal noexpandtab tabstop=4
 
+autocmd BufRead,BufNewFile *.md setlocal wrap
 
 "scrolling with mouse
 nmap <F11> zh5
@@ -202,7 +203,7 @@ vnoremap D "_D
 " global search using ack/ag/etc (using CtrlSF plugin)
 "vmap     <C-F>F <Plug>CtrlSFVwordExec
 nmap     <C-S-F> <Plug>CtrlSFPrompt
-
+let g:ctrlsf_ignore_dir = ['scss','static']
 " ctr-s to save
 map <C-S> :w<CR>
 
@@ -282,7 +283,7 @@ let g:intero_backend = {
         \}
        " \ 'cwd': expand('%:p:h'),
 " Start for haskell on startup 
-let g:intero_start_immediately = 1
+let g:intero_start_immediately = 0
 " Enable type information on hover (when holding cursor at point for x second).
 let g:intero_type_on_hover = 0 " Seems to clear errors...annoying
 " OPTIONAL: Make the update time shorter, so the type info will trigger faster.
@@ -297,6 +298,8 @@ nmap <silent> <leader>hT :InteroTypeInsert<CR>
 let g:intero_use_neomake = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 0
+" without this, it breaks on the custom prompt:
+let g:intero_prompt_regex = "λ: "
 
 " OR
 
