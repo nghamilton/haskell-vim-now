@@ -16,6 +16,7 @@ Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 Plug 'neomake/neomake'
 Plug 'LnL7/vim-nix'
+Plug 'Twinside/vim-haskellFold'
 Plug 'nghamilton/hij', { 'for': 'haskell' }
 
 " non-haskell specific
@@ -24,3 +25,9 @@ Plug 'nghamilton/hij', { 'for': 'haskell' }
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-abolish'
 Plug 'avh4/elm-format'
+Plug 'tpope/vim-surround'
+Plug 'ElmCast/elm-vim'
+Plug 'ElmCast/elm-oracle'
+
+" Plant UML diagram syntax in vim
+Plug 'aklt/plantuml-syntax'

@@ -118,11 +118,12 @@ set tags+=.codex.tags;/
 "map <leader>tu :!codex update<CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:     call LoadHscope()<CR> 
 " or run hasktags without codex... much faster! 
 " NB: LoadHscope() maps hscope generated database file to cscope tags
-map <leader>tu call Hasktags()<CR><CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR> 
-function Hasktags()
-  :silent !hasktags --extendedctag -R --ctags -o .codex.tags .
-  :redraw!
-endfunction
+" map <leader>tu call Hasktags()<CR><CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR> 
+" function Hasktags()
+"   :silent !hasktags --extendedctag -R --ctags --tags-absolute -o .codex.tags .
+"   :redraw!
+" endfunction
+map <leader>tu !tu<CR><CR>
 " set iskeyword=a-z,A-Z,_,.,39 -- doesn't work, supposed to allow qualified searches
 
 
@@ -130,8 +131,8 @@ endfunction
 " Unfortunately silent means the errors look a little ugly, I suppose I could
 " capture those and print them out with echohl WarningMsg.
 augroup tags
-au BufWritePost *.hs            call Hasktags()
-au BufWritePost *.hsc           call Hasktags()
+" au BufWritePost *.hs            call Hasktags()
+" au BufWritePost *.hsc           call Hasktags()
 augroup END
 
 "wip to get tags to update
@@ -207,6 +208,9 @@ let g:ctrlsf_ignore_dir = ['scss','static']
 " ctr-s to save
 map <C-S> :w<CR>
 
+" plantUML app
+let g:plantuml_executable_script='plantuml'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Haskell specific stuff
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -218,13 +222,14 @@ autocmd BufEnter *.hs let g:NERDTreeIgnore = ['\.o$','\.hi$','\.dyn_hi$','\.dyn_
 " case sensitive tag jumping
 autocmd BufEnter  *.hs setlocal noignorecase
 
-let g:neoformat_run_all_formatters = 1
-let g:neoformat_enabled_haskell = ['stylishhaskell']
+" manually add these into local .vimrc files if want autoformatting
+" let g:neoformat_run_all_formatters = 1
+" let g:neoformat_enabled_haskell = ['brittany']
 " auto format after a save
-augroup fmt
-  autocmd!
-  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
-augroup END
+" augroup fmt
+"   autocmd!
+"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+" augroup END
 
 """""""""""""""""""""""
 " COLORS
@@ -288,6 +293,8 @@ let g:intero_start_immediately = 0
 let g:intero_type_on_hover = 0 " Seems to clear errors...annoying
 " OPTIONAL: Make the update time shorter, so the type info will trigger faster.
 set updatetime=1000
+" Needed for custom prompt
+let g:intero_prompt_regex = "λ"
 
 " Type of expression under cursor
 nmap <silent> <leader>ht :InteroGenericType<CR>
@@ -363,8 +370,12 @@ map <leader>hI /^import.*\n\n<CR>:noh<CR>oimport
 let g:ale_linters_explicit = 1
 "NB: this configuration only works with cabal and not cabl new-* builds ... as for britanny, no idea.
 let g:ale_linters = {'haskell': []}
+" disable all fixers by default, override in local .nvimrc files
+let g:ale_fixers = ['']
+
 " with ghc and stack, and without our custom cabal_ghc:
 "\   'haskell': ['brittany', 'ghc', 'stack-ghc', 'stack-build'!!, 'ghc-mod', 'stack-ghc-mod', 'hlint', 'hdevtools', 'hfmt'],
+" let g:ale_fixers = ['hfmt'] -- works with nix, but needs local .nvimrc file
 
 "let g:ale_command_wrapper = '/tmp/debug-ale'
 
@@ -391,3 +402,6 @@ let g:ctrlp_use_caching = 1
 
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 noremap! <C-BS> <C-w>
+
+" LOAD LOCAL DIRECTORY VIMRC FILES!
+set exrc
